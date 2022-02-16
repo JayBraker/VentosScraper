@@ -1,0 +1,5 @@
+name = "name"
+desc = "desc"
+tech = "tech"
+manufactur_id = "manufactur_id"
+kosher = "kosher"
