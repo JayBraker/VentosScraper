@@ -22,5 +22,11 @@ jobs:
         password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
     - name: Pull base image
       run: docker pull jaybraker/python_scraper_base:latest
-    - name: Scrape
-      run: DOCKER_BUILDKIT=1 docker build --file Dockerfile.scraper --output out .
+    - name: Build temp application image
+      run: docker image build -f Dockerfile.scraper . -t ventos_scrape:latest
+    - name: Run Scraper
+      run: docker run -it --rm -v $(pwd):/app/out ventos_scrape:latest
+    - uses: actions/upload-artifact@v2
+      with:
+        name: chem-catalog
+        path: $(pwd)/chems.csv
