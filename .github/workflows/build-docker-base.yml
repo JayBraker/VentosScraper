@@ -19,7 +19,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v1
       with:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.base
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
         repository: ${{ format('{0}/python_scraper_base', secrets.DOCKERHUB_USERNAME) }}
