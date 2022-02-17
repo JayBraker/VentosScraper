@@ -130,3 +130,4 @@ dmypy.json
 
 # Blob output
 *.csv
+ventos_scaper_notebook.py
