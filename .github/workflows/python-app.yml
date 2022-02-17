@@ -27,7 +27,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Convert Notebook to .py
       run: |
-        jupyter nbconvert --to script ventos_scaper_notebook.ipynb
+        jupyter nbconvert --to script *.ipynb
     - name: start scraping
       run: python3 ventos_scraper_notebook.py
     - uses: actions/upload-artifact@v2
