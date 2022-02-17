@@ -26,7 +26,7 @@ jobs:
     - name: Build temp application image
       run: docker image build -f Dockerfile.scraper . -t ventos_scrape:latest
     - name: Run Scraper
-      run: docker run -it --rm -v $(pwd):/app/out ventos_scrape:latest
+      run: docker run -a STDOUT --rm -v $(pwd):/app/out ventos_scrape:latest
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
