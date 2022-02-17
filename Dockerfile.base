@@ -1,9 +1,11 @@
 # Container image that runs your code
-FROM python:3.10-slim
+FROM python:3.10
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
-COPY * /home/
+COPY requirements.txt /app/
 
-RUN python -m pip install --upgrade pip
-RUN pip install flake8 pytest cython numpy jupyter nbconvert
-RUN if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+WORKDIR /app/
+RUN python -m venv venv
+RUN venv/bin/python -m pip install --upgrade pip
+RUN venv/bin/python -m pip install flake8 pytest cython numpy jupyter nbconvert
+RUN if [ -f requirements.txt ]; then venv/bin/python -m pip install -r requirements.txt; fi

@@ -1,9 +1,8 @@
-FROM python_scraper_base:latest AS stage1
+FROM jaybraker/python_scraper_base:latest AS build
 
-COPY . .
+COPY --from=stage build /app/venv /app/
 
-RUN jupyter nbconvert *.ipynb
-RUN python ventos_scraper_notebook.py
+WORKDIR /app/
 
-FROM scratch AS export-stage
-COPY --from=stage1 ./chems.csv .
+RUN venv/bin/python -m jupyter nbconvert --to script *.ipynb
+RUN venv/bin/python ventos_scraper_notebook.py
