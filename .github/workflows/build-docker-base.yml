@@ -5,11 +5,12 @@ name: Scrape catalog
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *"
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  build_ventos_container:
 
     runs-on: ubuntu-latest
 
@@ -25,12 +26,3 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest cython numpy jupyter nbconvert
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Convert Notebook to .py
-      run: |
-        jupyter nbconvert --to script *.ipynb
-    - name: start scraping
-      run: python3 ventos_scraper_notebook.py
-    - uses: actions/upload-artifact@v2
-      with:
-        name: chemicals-catalog
-        path: ./chems.csv
