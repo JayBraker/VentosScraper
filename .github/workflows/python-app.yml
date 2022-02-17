@@ -22,3 +22,5 @@ jobs:
         password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
     - name: Pull base image
       run: docker pull jaybraker/python_scraper_base:latest
+    - name: Scrape
+      run: DOCKER_BUILDKIT=1 docker build --file Dockerfile.scraper --output out .
