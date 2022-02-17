@@ -1,0 +1,9 @@
+FROM python_scraper_base:latest AS stage1
+
+COPY . .
+
+RUN jupyter nbconvert *.ipynb
+RUN python ventos_scraper_notebook.py
+
+FROM scratch AS export-stage
+COPY --from=stage1 ./chems.csv .
