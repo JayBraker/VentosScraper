@@ -1,8 +1,9 @@
-FROM jaybraker/python_scraper_base:latest AS build
-
-COPY --from=stage build /app/venv /app/
+FROM python:3.10-slim AS build-stage
+COPY --from=jaybraker/python_scraper_base:latest /app/venv /app/venv
 
 WORKDIR /app/
+COPY . .
 
 RUN venv/bin/python -m jupyter nbconvert --to script *.ipynb
-RUN venv/bin/python ventos_scraper_notebook.py
+RUN if ! [ -d out ]; then mkdir out; fi
+CMD ["venv/bin/python", "ventos_scraper_notebook.py"]
