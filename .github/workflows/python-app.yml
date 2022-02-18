@@ -26,12 +26,13 @@ jobs:
     - name: Build temp application image
       run: docker image build -f Dockerfile.scraper . -t ventos_scrape:latest
     - name: Create Output folder
-      run: mkdir /out/
+      run: |
+        echo $(pwd)
+        mkdir -p $(pwd)/out
     - name: Run Scraper
       run: docker run -a STDOUT --rm -v /out/:/app/out ventos_scrape:latest
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        working-direcory: /out/
         name: chem-catalog
         path: chems.csv
