@@ -26,7 +26,7 @@ jobs:
     - name: Build temp application image
       run: docker image build -f Dockerfile.scraper . -t ventos_scrape:latest
     - name: Create Output folder
-      run: mkdir /run/
+      run: mkdir /out/
     - name: Run Scraper
       run: docker run -a STDOUT --rm -v /out/:/app/out ventos_scrape:latest
     - name: Upload Artifact
