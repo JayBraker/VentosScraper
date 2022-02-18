@@ -32,13 +32,12 @@ jobs:
     - name: View Output folder
       run: ls ${{ github.workspace }}/out/
     - name: Run Scraper
-      run: docker run -a STDOUT --rm -v $(pwd)/out/:/app/out ventos_scrape:latest
+      run: docker run -a STDOUT --rm -v ${{ github.workspace }}/out/:/app/out ventos_scrape:latest
     - name: View Output folder
       run: |
         ls $(pwd)/out/
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        working-directory: ${{ github.workspace }}/out/
         name: chem-catalog
-        path: chems.csv
+        path: ${{ github.workspace }}/out/
