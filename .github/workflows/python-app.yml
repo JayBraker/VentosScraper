@@ -9,7 +9,7 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  build:
+  scrape:
 
     runs-on: ubuntu-latest
 
@@ -27,17 +27,22 @@ jobs:
       run: docker image build -f Dockerfile.scraper . -t ventos_scrape:latest
     - name: Create Output folder
       run: |
-        echo ${{ github.workspace }}
         mkdir -p ${{ github.workspace }}/out
-    - name: View Output folder
-      run: ls ${{ github.workspace }}/out/
     - name: Run Scraper
       run: docker run -a STDOUT --rm -v ${{ github.workspace }}/out/:/app/out ventos_scrape:latest
     - name: View Output folder
-      run: |
-        ls $(pwd)/out/
+      run: ls ${{ github.workspace }}/out/
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: chem-catalog
         path: ${{ github.workspace }}/out/
+
+#  notify:
+  
+ #   runs-on: ubuntu-latest
+    
+ #   steps:
+ #   - name: Fetch artifacts
+ #     uses: actions/download-artifact@v2
+      
