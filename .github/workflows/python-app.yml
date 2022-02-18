@@ -29,8 +29,14 @@ jobs:
       run: |
         echo $(pwd)
         mkdir -p $(pwd)/out
+    - name: View Output folder
+      run: |
+        ls $(pwd)/out/
     - name: Run Scraper
-      run: docker run -a STDOUT --rm -v /out/:/app/out ventos_scrape:latest
+      run: docker run -a STDOUT --rm -v $(pwd)/out/:/app/out ventos_scrape:latest
+    - name: View Output folder
+      run: |
+        ls $(pwd)/out/
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
