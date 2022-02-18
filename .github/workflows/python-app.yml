@@ -25,10 +25,13 @@ jobs:
       run: docker pull jaybraker/python_scraper_base:latest
     - name: Build temp application image
       run: docker image build -f Dockerfile.scraper . -t ventos_scrape:latest
+    - name: Create Output folder
+      run: mkdir /run/
     - name: Run Scraper
-      run: docker run -a STDOUT --rm -v $(pwd):/app/out ventos_scrape:latest
+      run: docker run -a STDOUT --rm -v /out/:/app/out ventos_scrape:latest
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
+        working-direcory: /out/
         name: chem-catalog
-        path: $(pwd)/chems.csv
+        path: chems.csv
